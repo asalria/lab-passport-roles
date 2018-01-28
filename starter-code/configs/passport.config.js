@@ -64,18 +64,19 @@ module.exports.setup = (passport) => {
  }
 
  module.exports.checkRole = (role) => {
-     return (req, res, next) => {
-         if (!req.isAuthenticated()) {
-             res.status(401);
-             res.redirect('/login');
-         } else if (req.user.role === role) {
-             next();
-         } else {
-             res.status(403);
-             res.render('error', {
-                 message: 'Forbidden',
-                 error: {}
-             });
-         }
-     }
- }
+    return (req, res, next) => {
+        console.log(req.user);
+        if (!req.isAuthenticated()) {
+            res.status(401);
+            res.redirect('/login');
+        } else if (req.user.role === role) {
+            next();
+        } else {
+            res.status(403);
+            res.render('error', {
+                message: 'Forbidden',
+                error: {}
+            });
+        }
+    }
+}

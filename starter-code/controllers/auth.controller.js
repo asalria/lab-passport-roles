@@ -19,7 +19,7 @@ module.exports.doSignup = (req, res, next) => {
                 user.save()
                     .then(() => {
                         req.flash('info', 'Successfully sign up, now you can login!');
-                        res.redirect('/login');
+                        res.redirect('auth/login');
                     }).catch(error => {
                         if (error instanceof mongoose.Error.ValidationError) {
                             res.render('auth/signup', { 
@@ -36,6 +36,12 @@ module.exports.doSignup = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
     res.render('auth/login',{
+        flash: req.flash()
+    });
+}
+
+module.exports.index = (req, res, next) => {
+    res.render('index',{
         flash: req.flash()
     });
 }
@@ -59,10 +65,11 @@ module.exports.doLogin = (req, res, next) => {
                 res.render('auth/login', { error: validation });
             } else {
                 req.login(user, (error) => {
+                  //  console.log(user);
                     if (error) {
                         next(error);
                     }else{
-                        res.render('/index');
+                        res.redirect('/index');
                     }
                 });
             }

@@ -8,7 +8,8 @@ router.get('/signup', authController.signup);
 router.post('/signup', authController.doSignup);
 
 router.get('/', authController.login);
-router.post('/login', secure.checkRole("BOSS"), authController.doLogin);
+router.post('/login', authController.doLogin);
+router.get('/index', secure.checkRole("BOSS"), authController.index);
 
 router.post('/auth/fb', passport.authenticate('fb-auth', { scope: ['email'] }));
 router.post('/auth/google', passport.authenticate('google-auth', { scope: ['openid', 'profile', 'email']}));
